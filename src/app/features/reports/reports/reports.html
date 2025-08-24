@@ -1,0 +1,56 @@
+<div class="container mx-auto px-4">
+  <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Reports</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <!-- Summary Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Expense Summary</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between">
+          <span class="text-gray-600 dark:text-gray-400">Total Expenses</span>
+          <span class="font-medium text-gray-900 dark:text-white">{{ expenses.length }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-600 dark:text-gray-400">Total Amount</span>
+          <span class="font-medium text-red-500">{{ totalAmount | currency }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-600 dark:text-gray-400">Average per Expense</span>
+          <span class="font-medium text-gray-900 dark:text-white">
+            {{ (expenses.length > 0 ? (totalAmount / expenses.length) : 0) | currency }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Breakdown Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Category Breakdown</h2>
+      <div class="space-y-3">
+        <div *ngFor="let item of categoryTotals" class="space-y-1">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-600 dark:text-gray-400">{{ item.category }}</span>
+            <span class="font-medium text-gray-900 dark:text-white">
+              {{ item.total | currency }} ({{ item.percentage | number:'1.0-1' }}%)
+            </span>
+          </div>
+          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div
+              class="bg-indigo-600 h-2 rounded-full"
+              [style.width]="getBarWidth(item.percentage)"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expenses by Month -->
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+    <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Monthly Expenses</h2>
+    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+      <p>Monthly expense charts will be implemented in a future update.</p>
+      <p class="text-sm">This feature will include interactive charts showing expenses by month.</p>
+    </div>
+  </div>
+</div>

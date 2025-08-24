@@ -1,0 +1,90 @@
+<div class="container mx-auto px-4 max-w-2xl">
+  <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Settings</h1>
+
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
+    <!-- Appearance Settings -->
+    <div>
+      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Appearance</h2>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Dark Mode</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Switch between light and dark themes</p>
+        </div>
+        <button
+          (click)="onDarkModeToggle()"
+          class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          [class.bg-indigo-600]="(themeService.darkMode$ | async)"
+          [class.bg-gray-200]="!(themeService.darkMode$ | async)"
+          role="switch"
+          aria-checked="false"
+        >
+          <span class="sr-only">Dark mode toggle</span>
+          <span
+            aria-hidden="true"
+            class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+            [class.translate-x-5]="(themeService.darkMode$ | async)"
+            [class.translate-x-0]="!(themeService.darkMode$ | async)"
+          ></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Data Management -->
+    <div>
+      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Data Management</h2>
+
+      <div class="space-y-4">
+        <!-- Export Data -->
+        <div>
+          <button
+            (click)="exportData()"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md"
+          >
+            Export Expense Data
+          </button>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Download all your expense data as a JSON file
+          </p>
+        </div>
+
+        <!-- Import Data -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Import Expense Data
+          </label>
+          <input
+            type="file"
+            (change)="importData($event)"
+            accept=".json"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          >
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Import expense data from a previously exported JSON file
+          </p>
+        </div>
+
+        <!-- Clear Data -->
+        <div>
+          <button
+            (click)="clearData()"
+            class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+          >
+            Clear All Data
+          </button>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Permanently delete all expense data. This action cannot be undone.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Information -->
+    <div>
+      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">About Ledgerly</h2>
+      <div class="space-y-2 text-gray-700 dark:text-gray-300">
+        <p>Ledgerly is a personal expense tracker built with Angular.</p>
+        <p class="text-sm">Version 1.0.0</p>
+      </div>
+    </div>
+  </div>
+</div>

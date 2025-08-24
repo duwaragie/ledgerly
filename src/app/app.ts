@@ -1,12 +1,24 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+ import { CommonModule } from '@angular/common';
+ import { RouterOutlet } from '@angular/router';
+ import { HeaderComponent } from './core/layout/header/header';
+ import { SidebarComponent } from './core/layout/sidebar/sidebar';
+ import { FooterComponent } from './core/layout/footer/footer';
+ import { AuthService } from './core/services/auth';
 
-@Component({
+ @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('ledgerly');
-}
+export class AppComponent {
+   title = 'Ledgerly';
+
+   constructor(public authService: AuthService) {}
+
+   get isLoggedIn(): boolean {
+     return this.authService.isAuthenticated();
+   }
+ }
