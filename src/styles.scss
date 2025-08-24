@@ -1,6 +1,24 @@
-@import "tailwindcss";
+@use "tailwindcss";
 
-/* PrimeNG imports */
-@import "primeng/resources/primeng.min.css";
-@import "primeng/resources/themes/lara-light-blue/theme.css";
+/* PrimeNG icons */
 @import "primeicons/primeicons.css";
+
+/* Global styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Custom CSS variables for consistent theming */
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #64748b;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+}
