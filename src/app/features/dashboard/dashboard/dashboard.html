@@ -1,69 +1,216 @@
-<div class="container mx-auto px-4">
-  <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Dashboard</h1>
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <!-- Total Expenses Card -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-red-100 text-red-500 dark:bg-red-900 dark:text-red-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <div class="ml-4">
-          <h2 class="text-gray-600 dark:text-gray-400">Total Expenses</h2>
-          <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ totalExpenses | currency }}</p>
-        </div>
+<div class="animate-fade-in">
+  <!-- Header Section -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-4xl font-bold text-white mb-2">
+          Welcome back! 👋
+        </h1>
+        <p class="text-white/70 text-lg">Here's your financial overview for today</p>
       </div>
-    </div>
-
-    <!-- Monthly Average Card -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-blue-100 text-blue-500 dark:bg-blue-900 dark:text-blue-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-        </div>
-        <div class="ml-4">
-          <h2 class="text-gray-600 dark:text-gray-400">Monthly Average</h2>
-          <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ monthlyAverage | currency }}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Largest Expense Card -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-green-100 text-green-500 dark:bg-green-900 dark:text-green-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-          </svg>
-        </div>
-        <div class="ml-4">
-          <h2 class="text-gray-600 dark:text-gray-400">Largest Expense</h2>
-          <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ largestExpense?.amount | currency }}</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">{{ largestExpense?.description }}</p>
-        </div>
+      <div class="flex space-x-3">
+        <button (click)="navigateToAddExpense()"
+                class="btn-animated px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+          <i class="pi pi-plus mr-2"></i>
+          Add Expense
+        </button>
+        <button (click)="exportData()"
+                class="btn-animated px-6 py-3 glass text-white rounded-2xl font-medium hover:bg-white/20 transition-all duration-300">
+          <i class="pi pi-download mr-2"></i>
+          Export
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Recent Expenses -->
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-      <h2 class="text-lg font-medium text-gray-900 dark:text-white">Recent Expenses</h2>
-    </div>
-    <div class="divide-y divide-gray-200 dark:divide-gray-700">
-      <div *ngFor="let expense of recentExpenses" class="px-6 py-4 flex justify-between items-center">
-        <div>
-          <p class="font-medium text-gray-900 dark:text-white">{{ expense.description }}</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">{{ expense.category }} • {{ expense.date | date }}</p>
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Total Expenses Card -->
+    <div class="card-hover glass rounded-3xl p-6 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-danger-400/20 to-danger-600/20 rounded-full -mr-10 -mt-10"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-danger-400 to-danger-600 rounded-2xl flex items-center justify-center shadow-lg float-animation">
+            <i class="pi pi-credit-card text-white text-xl"></i>
+          </div>
+          <div class="text-right">
+            <div class="text-white/60 text-sm">vs last month</div>
+            <div class="text-danger-300 text-sm font-medium">+12.5%</div>
+          </div>
         </div>
-        <div class="text-red-500 font-medium">{{ expense.amount | currency }}</div>
+        <div class="text-white/70 text-sm mb-1">Total Expenses</div>
+        <div class="text-3xl font-bold text-white">{{ totalExpenses | currency:'USD':'symbol':'1.0-0' }}</div>
       </div>
-      <div *ngIf="recentExpenses.length === 0" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-        No expenses yet. <a routerLink="/expenses/new" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Add your first expense</a>
+    </div>
+
+    <!-- Monthly Average Card -->
+    <div class="card-hover glass rounded-3xl p-6 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-full -mr-10 -mt-10"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg float-animation" style="animation-delay: 0.2s;">
+            <i class="pi pi-chart-line text-white text-xl"></i>
+          </div>
+          <div class="text-right">
+            <div class="text-white/60 text-sm">vs last month</div>
+            <div class="text-success-300 text-sm font-medium">-8.2%</div>
+          </div>
+        </div>
+        <div class="text-white/70 text-sm mb-1">Monthly Average</div>
+        <div class="text-3xl font-bold text-white">{{ monthlyAverage | currency:'USD':'symbol':'1.0-0' }}</div>
+      </div>
+    </div>
+
+    <!-- Largest Expense Card -->
+    <div class="card-hover glass rounded-3xl p-6 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-accent-400/20 to-accent-600/20 rounded-full -mr-10 -mt-10"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-2xl flex items-center justify-center shadow-lg float-animation" style="animation-delay: 0.4s;">
+            <i class="pi pi-arrow-up text-white text-xl"></i>
+          </div>
+          <div class="text-right">
+            <div class="text-white/60 text-sm">category</div>
+            <div class="text-accent-300 text-sm font-medium">{{ largestExpense?.category }}</div>
+          </div>
+        </div>
+        <div class="text-white/70 text-sm mb-1">Largest Expense</div>
+        <div class="text-3xl font-bold text-white">{{ largestExpense?.amount | currency:'USD':'symbol':'1.0-0' }}</div>
+      </div>
+    </div>
+
+    <!-- Savings Goal Card -->
+    <div class="card-hover glass rounded-3xl p-6 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-success-400/20 to-success-600/20 rounded-full -mr-10 -mt-10"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-success-400 to-success-600 rounded-2xl flex items-center justify-center shadow-lg float-animation" style="animation-delay: 0.6s;">
+            <i class="pi pi-piggy-bank text-white text-xl"></i>
+          </div>
+          <div class="text-right">
+            <div class="text-white/60 text-sm">goal progress</div>
+            <div class="text-success-300 text-sm font-medium">75%</div>
+          </div>
+        </div>
+        <div class="text-white/70 text-sm mb-1">Savings Goal</div>
+        <div class="text-3xl font-bold text-white">$3,750</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Recent Expenses -->
+    <div class="lg:col-span-2">
+      <div class="glass rounded-3xl p-6 card-hover">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-white flex items-center">
+            <i class="pi pi-history mr-3 text-primary-400"></i>
+            Recent Expenses
+          </h2>
+          <button (click)="navigateToExpenseList()"
+                  class="glass px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/20 transition-all duration-300">
+            View All
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          <div *ngFor="let expense of recentExpenses; let i = index"
+               class="flex items-center justify-between p-4 glass rounded-2xl hover:bg-white/20 transition-all duration-300 animate-slide-in-up"
+               [style.animation-delay]="(i * 0.1) + 's'">
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-2xl flex items-center justify-center">
+                <i class="pi pi-shopping-cart text-primary-300"></i>
+              </div>
+              <div>
+                <h3 class="text-white font-medium">{{ expense.description }}</h3>
+                <p class="text-white/60 text-sm">{{ expense.category }} • {{ expense.date | date:'shortDate' }}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-xl font-bold text-white">{{ expense.amount | currency:'USD':'symbol':'1.0-0' }}</div>
+              <div class="text-white/60 text-sm">{{ expense.date | date:'shortTime' }}</div>
+            </div>
+          </div>
+
+          <div *ngIf="recentExpenses.length === 0"
+               class="text-center py-12">
+            <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="pi pi-plus text-white/60 text-2xl"></i>
+            </div>
+            <p class="text-white/60 mb-4">No expenses yet. Start tracking your finances!</p>
+            <button (click)="navigateToAddExpense()"
+                    class="btn-animated px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+              Add Your First Expense
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Panel -->
+    <div class="space-y-6">
+      <!-- Quick Actions -->
+      <div class="glass rounded-3xl p-6 card-hover">
+        <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+          <i class="pi pi-bolt mr-3 text-warning-400"></i>
+          Quick Actions
+        </h3>
+        <div class="space-y-3">
+          <button (click)="navigateToAddExpense()"
+                  class="w-full btn-animated p-4 glass rounded-2xl text-white hover:bg-white/20 transition-all duration-300 flex items-center">
+            <i class="pi pi-plus mr-3 text-primary-400"></i>
+            Add Expense
+          </button>
+          <button (click)="navigateToReports()"
+                  class="w-full btn-animated p-4 glass rounded-2xl text-white hover:bg-white/20 transition-all duration-300 flex items-center">
+            <i class="pi pi-chart-bar mr-3 text-success-400"></i>
+            View Reports
+          </button>
+          <button (click)="exportData()"
+                  class="w-full btn-animated p-4 glass rounded-2xl text-white hover:bg-white/20 transition-all duration-300 flex items-center">
+            <i class="pi pi-download mr-3 text-accent-400"></i>
+            Export Data
+          </button>
+        </div>
+      </div>
+
+      <!-- Categories Breakdown -->
+      <div class="glass rounded-3xl p-6 card-hover">
+        <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+          <i class="pi pi-chart-pie mr-3 text-accent-400"></i>
+          Top Categories
+        </h3>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-3 h-3 bg-primary-400 rounded-full"></div>
+              <span class="text-white/80">Food & Dining</span>
+            </div>
+            <span class="text-white font-medium">$1,250</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-3 h-3 bg-success-400 rounded-full"></div>
+              <span class="text-white/80">Transportation</span>
+            </div>
+            <span class="text-white font-medium">$850</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-3 h-3 bg-accent-400 rounded-full"></div>
+              <span class="text-white/80">Entertainment</span>
+            </div>
+            <span class="text-white font-medium">$650</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-3 h-3 bg-warning-400 rounded-full"></div>
+              <span class="text-white/80">Shopping</span>
+            </div>
+            <span class="text-white font-medium">$420</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

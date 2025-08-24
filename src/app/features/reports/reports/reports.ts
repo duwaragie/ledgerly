@@ -34,25 +34,21 @@ export class Reports implements OnInit {
 
     const categoryMap = new Map<string, number>();
 
-    // Initialize all categories with 0
     Object.values(Category).forEach(category => {
       categoryMap.set(category, 0);
     });
 
-    // Sum amounts by category
     this.expenses.forEach(expense => {
       const current = categoryMap.get(expense.category) || 0;
       categoryMap.set(expense.category, current + expense.amount);
     });
 
-    // Convert to array and calculate percentages
     this.categoryTotals = Array.from(categoryMap.entries()).map(([category, total]) => ({
       category,
       total,
       percentage: this.totalAmount > 0 ? (total / this.totalAmount) * 100 : 0
     }));
 
-    // Sort by total descending
     this.categoryTotals.sort((a, b) => b.total - a.total);
   }
 

@@ -1,22 +1,97 @@
-<aside class="w-64 bg-white dark:bg-gray-800 shadow-md">
-  <nav class="mt-6">
-    <div class="px-6 py-4 space-y-2">
-      <a routerLink="/dashboard" routerLinkActive="bg-gray-200 dark:bg-gray-700"
-         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
-        Dashboard
+<aside class="w-80 glass backdrop-blur-md border-r border-white/20 min-h-screen relative overflow-hidden">
+  <!-- Decorative Background -->
+  <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent"></div>
+
+  <!-- Navigation Content -->
+  <nav class="relative z-10 p-6">
+    <!-- Profile Section -->
+    <div class="mb-8 p-6 glass rounded-2xl">
+      <div class="flex items-center space-x-4 mb-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center shadow-lg">
+          <span class="text-white font-bold text-lg">U</span>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold">User</h3>
+          <p class="text-white/60 text-sm">Expense Manager</p>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white/10 rounded-xl p-3 text-center">
+          <div class="text-white font-bold">$2,450</div>
+          <div class="text-white/60 text-xs">Total</div>
+        </div>
+        <div class="bg-white/10 rounded-xl p-3 text-center">
+          <div class="text-white font-bold">$850</div>
+          <div class="text-white/60 text-xs">This Month</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="space-y-2">
+      <h4 class="text-white/60 text-sm font-medium uppercase tracking-wider mb-4">Navigation</h4>
+
+      <a routerLink="/dashboard"
+         routerLinkActive="bg-gradient-to-r from-primary-500/80 to-primary-600/80 shadow-lg shadow-primary-500/25"
+         class="flex items-center space-x-4 p-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 group card-hover">
+        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+          <i class="pi pi-home text-lg"></i>
+        </div>
+        <div>
+          <div class="font-medium">Dashboard</div>
+          <div class="text-xs text-white/50">Overview & Analytics</div>
+        </div>
       </a>
-      <a routerLink="/expenses" routerLinkActive="bg-gray-200 dark:bg-gray-700"
-         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
-        Expenses
+
+      <a routerLink="/expenses"
+         routerLinkActive="bg-gradient-to-r from-accent-500/80 to-accent-600/80 shadow-lg shadow-accent-500/25"
+         class="flex items-center space-x-4 p-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 group card-hover">
+        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+          <i class="pi pi-money-bill text-lg"></i>
+        </div>
+        <div>
+          <div class="font-medium">Expenses</div>
+          <div class="text-xs text-white/50">Manage Transactions</div>
+        </div>
       </a>
-      <a routerLink="/reports" routerLinkActive="bg-gray-200 dark:bg-gray-700"
-         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
-        Reports
+
+      <a routerLink="/reports"
+         routerLinkActive="bg-gradient-to-r from-success-500/80 to-success-600/80 shadow-lg shadow-success-500/25"
+         class="flex items-center space-x-4 p-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 group card-hover">
+        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+          <i class="pi pi-chart-bar text-lg"></i>
+        </div>
+        <div>
+          <div class="font-medium">Reports</div>
+          <div class="text-xs text-white/50">Insights & Trends</div>
+        </div>
       </a>
-      <a routerLink="/settings" routerLinkActive="bg-gray-200 dark:bg-gray-700"
-         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
-        Settings
+
+      <a routerLink="/settings"
+         routerLinkActive="bg-gradient-to-r from-warning-500/80 to-warning-600/80 shadow-lg shadow-warning-500/25"
+         class="flex items-center space-x-4 p-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 group card-hover">
+        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+          <i class="pi pi-cog text-lg"></i>
+        </div>
+        <div>
+          <div class="font-medium">Settings</div>
+          <div class="text-xs text-white/50">Preferences</div>
+        </div>
       </a>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="mt-8 p-4 glass rounded-2xl">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-white/60 text-sm">Storage Used</span>
+        <span class="text-white text-sm font-medium">68%</span>
+      </div>
+      <div class="w-full bg-white/10 rounded-full h-2">
+        <div class="bg-gradient-to-r from-primary-400 to-primary-600 h-2 rounded-full" style="width: 68%"></div>
+      </div>
+      <p class="text-white/50 text-xs mt-2">2.1 GB of 3 GB used</p>
     </div>
   </nav>
 </aside>

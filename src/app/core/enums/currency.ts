@@ -3,5 +3,6 @@ export enum Currency {
   EUR = 'EUR',
   GBP = 'GBP',
   JPY = 'JPY',
-  INR = 'INR'
+  INR = 'INR',
+  LKR = 'LKR'
 }

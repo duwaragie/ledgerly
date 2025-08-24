@@ -3,18 +3,6 @@ import { Router } from '@angular/router';
  import { AuthService } from '../services/auth';
 import { AuthGuard } from './auth-guard';
 
-// describe('AuthGuard', () => {
-//   const executeGuard: CanActivateFn = (...guardParameters) =>
-//       TestBed.runInInjectionContext(() => AuthGuard(...guardParameters));
-
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//   });
-
-//   it('should be created', () => {
-//     expect(executeGuard).toBeTruthy();
-//   });
-// });
 describe('AuthGuard', () => {
    let guard: AuthGuard;
    let authService: jasmine.SpyObj<AuthService>;
