@@ -1,89 +1,224 @@
-<div class="container mx-auto px-4 max-w-2xl">
-  <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Settings</h1>
-
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
-    <!-- Appearance Settings -->
-    <div>
-      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Appearance</h2>
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-gray-700 dark:text-gray-300">Dark Mode</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Switch between light and dark themes</p>
-        </div>
-        <button
-          (click)="onDarkModeToggle()"
-          class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          [class.bg-indigo-600]="(themeService.darkMode$ | async)"
-          [class.bg-gray-200]="!(themeService.darkMode$ | async)"
-          role="switch"
-          aria-checked="false"
-        >
-          <span class="sr-only">Dark mode toggle</span>
-          <span
-            aria-hidden="true"
-            class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-            [class.translate-x-5]="(themeService.darkMode$ | async)"
-            [class.translate-x-0]="!(themeService.darkMode$ | async)"
-          ></span>
+<div class="animate-fade-in">
+  <!-- Header Section -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-4xl font-bold text-white mb-2">
+          Settings
+        </h1>
+        <p class="text-white/70 text-lg">Customize your app experience and manage your data</p>
+      </div>
+      <div class="flex space-x-3">
+        <button (click)="saveSettings()"
+                class="btn-animated px-6 py-3 bg-gradient-to-r from-success-500 to-success-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+          <i class="pi pi-check mr-2"></i>
+          Save Changes
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Content -->
+  <div class="max-w-4xl mx-auto space-y-8">
+    <!-- Appearance Settings -->
+    <div class="glass rounded-3xl p-6 card-hover settings-section">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-white flex items-center">
+          <i class="pi pi-palette mr-3 text-primary-400"></i>
+          Appearance
+        </h2>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Dark Mode Toggle -->
+        <div class="flex items-center justify-between p-4 glass rounded-2xl hover:bg-white/10 transition-all duration-300 settings-card">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-accent-400/20 to-accent-600/20 rounded-2xl flex items-center justify-center">
+              <i class="pi pi-moon text-accent-300 text-xl icon-hover"></i>
+            </div>
+            <div>
+              <h3 class="text-white font-medium">Dark Mode</h3>
+              <p class="text-white/60 text-sm">Switch between light and dark themes</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-white/60 text-sm">{{ (themeService.darkMode$ | async) ? 'On' : 'Off' }}</span>
+            <button
+              (click)="onDarkModeToggle()"
+              class="relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-400/50 toggle-switch"
+              [class]="(themeService.darkMode$ | async) ? 'bg-gradient-to-r from-primary-500 to-primary-600 toggle-glow' : 'bg-white/20'"
+              role="switch"
+            >
+              <span class="sr-only">Dark mode toggle</span>
+              <span
+                aria-hidden="true"
+                class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition-all duration-300 ease-in-out flex items-center justify-center"
+                [class.translate-x-5]="(themeService.darkMode$ | async)"
+                [class.translate-x-0]="!(themeService.darkMode$ | async)"
+              >
+                <i class="pi {{ (themeService.darkMode$ | async) ? 'pi-moon' : 'pi-sun' }} text-xs"
+                   [class]="(themeService.darkMode$ | async) ? 'text-primary-600' : 'text-yellow-500'"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Theme Preview (Future Feature) -->
+        <div class="p-4 glass rounded-2xl opacity-60 settings-card">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-warning-400/20 to-warning-600/20 rounded-2xl flex items-center justify-center">
+              <i class="pi pi-brush text-warning-300 text-xl icon-hover"></i>
+            </div>
+            <div>
+              <h3 class="text-white font-medium">Custom Themes</h3>
+              <p class="text-white/60 text-sm">Choose from different color schemes (Coming Soon)</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Data Management -->
-    <div>
-      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Data Management</h2>
+    <div class="glass rounded-3xl p-6 card-hover settings-section">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-white flex items-center">
+          <i class="pi pi-database mr-3 text-success-400"></i>
+          Data Management
+        </h2>
+      </div>
 
-      <div class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Export Data -->
-        <div>
-          <button
-            (click)="exportData()"
-            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md"
-          >
-            Export Expense Data
-          </button>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Download all your expense data as a JSON file
-          </p>
+        <div class="p-4 glass rounded-2xl hover:bg-white/10 transition-all duration-300 group settings-card">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i class="pi pi-download text-primary-300 text-xl icon-hover"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-white font-medium mb-1">Export Data</h3>
+              <p class="text-white/60 text-sm mb-4">Download all your expense data as a JSON file for backup</p>
+              <button
+                (click)="exportData()"
+                class="btn-animated btn-settings w-full px-4 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <i class="pi pi-download mr-2"></i>
+                Export Expenses
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Import Data -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Import Expense Data
-          </label>
-          <input
-            type="file"
-            (change)="importData($event)"
-            accept=".json"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          >
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Import expense data from a previously exported JSON file
-          </p>
+        <div class="p-4 glass rounded-2xl hover:bg-white/10 transition-all duration-300 group settings-card">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-accent-400/20 to-accent-600/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i class="pi pi-upload text-accent-300 text-xl icon-hover"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-white font-medium mb-1">Import Data</h3>
+              <p class="text-white/60 text-sm mb-4">Restore your expense data from a previously exported file</p>
+              <div class="relative file-input-wrapper">
+                <input
+                  type="file"
+                  (change)="importData($event)"
+                  accept=".json"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  #fileInput
+                >
+                <button
+                  class="btn-animated btn-settings w-full px-4 py-3 glass text-white rounded-xl font-medium hover:bg-white/20 transition-all duration-300 border border-white/20"
+                >
+                  <i class="pi pi-upload mr-2"></i>
+                  Choose File
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Clear Data -->
-        <div>
-          <button
-            (click)="clearData()"
-            class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
-          >
-            Clear All Data
-          </button>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Permanently delete all expense data. This action cannot be undone.
-          </p>
+      <!-- Clear Data Warning Section -->
+      <div class="mt-6 p-4 glass rounded-2xl border border-danger-400/30 bg-gradient-to-r from-danger-400/10 to-danger-600/10 danger-zone">
+        <div class="flex items-start space-x-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-danger-400/20 to-danger-600/20 rounded-2xl flex items-center justify-center">
+            <i class="pi pi-exclamation-triangle text-danger-300 text-xl icon-hover"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-white font-medium mb-1">Danger Zone</h3>
+            <p class="text-white/60 text-sm mb-4">
+              Permanently delete all expense data. This action cannot be undone and will remove all your financial records.
+            </p>
+            <button
+              (click)="clearData()"
+              class="btn-animated btn-settings px-6 py-3 bg-gradient-to-r from-danger-500 to-danger-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <i class="pi pi-trash mr-2"></i>
+              Clear All Data
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- App Information -->
-    <div>
-      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">About Ledgerly</h2>
-      <div class="space-y-2 text-gray-700 dark:text-gray-300">
-        <p>Ledgerly is a personal expense tracker built with Angular.</p>
-        <p class="text-sm">Version 1.0.0</p>
+    <div class="glass rounded-3xl p-6 card-hover settings-section">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-white flex items-center">
+          <i class="pi pi-info-circle mr-3 text-warning-400"></i>
+          About Trackonomics
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- App Info -->
+        <div class="space-y-4">
+          <div class="flex items-center space-x-4 p-4 glass rounded-2xl settings-card">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-2xl flex items-center justify-center">
+              <i class="pi pi-money-bill text-primary-300 text-xl icon-hover"></i>
+            </div>
+            <div>
+              <h3 class="text-white font-medium">Trackonomics</h3>
+              <p class="text-white/60 text-sm">Personal expense tracking made beautiful</p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 p-4 glass rounded-2xl settings-card">
+            <div class="w-12 h-12 bg-gradient-to-br from-success-400/20 to-success-600/20 rounded-2xl flex items-center justify-center">
+              <i class="pi pi-code text-success-300 text-xl icon-hover"></i>
+            </div>
+            <div>
+              <h3 class="text-white font-medium">Version 1.0.0</h3>
+              <p class="text-white/60 text-sm">Built with Angular & TypeScript</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div class="space-y-4">
+          <h3 class="text-white font-medium mb-4">Key Features</h3>
+          <div class="space-y-2">
+            <div class="flex items-center space-x-3 text-white/80 feature-item">
+              <i class="pi pi-check-circle text-success-400"></i>
+              <span class="text-sm">Expense tracking & categorization</span>
+            </div>
+            <div class="flex items-center space-x-3 text-white/80 feature-item">
+              <i class="pi pi-check-circle text-success-400"></i>
+              <span class="text-sm">Beautiful reports & analytics</span>
+            </div>
+            <div class="flex items-center space-x-3 text-white/80 feature-item">
+              <i class="pi pi-check-circle text-success-400"></i>
+              <span class="text-sm">Data export & import</span>
+            </div>
+            <div class="flex items-center space-x-3 text-white/80 feature-item">
+              <i class="pi pi-check-circle text-success-400"></i>
+              <span class="text-sm">Dark mode support</span>
+            </div>
+            <div class="flex items-center space-x-3 text-white/80 feature-item">
+              <i class="pi pi-check-circle text-success-400"></i>
+              <span class="text-sm">Responsive design</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

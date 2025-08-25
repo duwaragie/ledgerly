@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExpenseService } from '../../../core/services/expense';
+import { ToastService } from '../../../core/services/toast';
 import { Expense } from '../../../core/models/expense';
 import { Category } from '../../../core/enums/category';
 
@@ -22,6 +23,7 @@ export class ExpenseForm implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private expenseService: ExpenseService,
+    private toastService: ToastService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -59,6 +61,10 @@ export class ExpenseForm implements OnInit {
 
   onSubmit(): void {
     if (this.expenseForm.invalid) {
+      this.toastService.warning('Please fill in all required fields correctly.', 4000);
+      Object.keys(this.expenseForm.controls).forEach(key => {
+        this.expenseForm.get(key)?.markAsTouched();
+      });
       return;
     }
 
@@ -68,12 +74,24 @@ export class ExpenseForm implements OnInit {
     };
 
     if (this.isEdit) {
-      this.expenseService.updateExpense(expense).subscribe(() => {
-        this.router.navigate(['/expenses']);
+      this.expenseService.updateExpense(expense).subscribe({
+        next: () => {
+          this.toastService.success('Expense updated successfully! 💰', 4000);
+          this.router.navigate(['/expenses']);
+        },
+        error: () => {
+          this.toastService.error('Failed to update expense. Please try again.', 6000);
+        }
       });
     } else {
-      this.expenseService.addExpense(expense).subscribe(() => {
-        this.router.navigate(['/expenses']);
+      this.expenseService.addExpense(expense).subscribe({
+        next: () => {
+          this.toastService.success('New expense added successfully! 🎉', 4000);
+          this.router.navigate(['/expenses']);
+        },
+        error: () => {
+          this.toastService.error('Failed to add expense. Please try again.', 6000);
+        }
       });
     }
   }

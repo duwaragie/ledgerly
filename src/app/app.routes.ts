@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth-guard';
 import { Login } from './features/auth/login/login';
+import { Signup } from './features/auth/signup/signup';
 import { Dashboard } from './features/dashboard/dashboard/dashboard';
 import { ExpenseList } from './features/expenses/expense-list/expense-list';
 import { ExpenseForm } from './features/expenses/expense-form/expense-form';
@@ -10,6 +11,7 @@ import { Settings } from './features/settings/settings/settings';
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'login', component: Login },
+  { path: 'signup', component: Signup },
   {
     path: 'dashboard',
     component: Dashboard,

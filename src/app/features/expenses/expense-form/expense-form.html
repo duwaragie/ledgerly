@@ -1,94 +1,119 @@
-<div class="container mx-auto px-4 max-w-2xl">
-  <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-    {{ isEdit ? 'Edit Expense' : 'Add New Expense' }}
-  </h1>
-
-  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-    <div class="mb-4">
-      <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-        Description
-      </label>
-      <input
-        type="text"
-        id="description"
-        formControlName="description"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-        placeholder="Enter expense description"
-      >
-      <div *ngIf="expenseForm.get('description')?.invalid && expenseForm.get('description')?.touched"
-           class="text-red-500 text-sm mt-1">
-        Description is required
+<div class="animate-fade-in">
+  <!-- Header Section -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-4xl font-bold text-white mb-2">
+          {{ isEdit ? 'Edit Expense ' : 'Add New Expense ' }}
+        </h1>
+        <p class="text-white/70 text-lg">{{ isEdit ? 'Update your expense details' : 'Track your spending with ease' }}</p>
+      </div>
+      <div class="flex space-x-3">
+        <button type="button" (click)="onCancel()"
+                class="btn-animated px-6 py-3 glass text-white rounded-2xl font-medium hover:bg-white/20 transition-all duration-300">
+          <i class="pi pi-times mr-2"></i>
+          Cancel
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="mb-4">
-      <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-        Category
-      </label>
-      <select
-        id="category"
-        formControlName="category"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-      >
-        <option value="">Select a category</option>
-        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-      </select>
-      <div *ngIf="expenseForm.get('category')?.invalid && expenseForm.get('category')?.touched"
-           class="text-red-500 text-sm mt-1">
-        Category is required
+  <!-- Main Form -->
+  <div class="max-w-2xl mx-auto">
+    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="glass rounded-3xl p-8 card-hover">
+      <!-- Description Field -->
+      <div class="mb-6">
+        <label for="description" class="block text-sm font-medium text-white/80 mb-2">
+          <i class="pi pi-file-edit mr-2 text-primary-400"></i>
+          Description
+        </label>
+        <input
+          type="text"
+          id="description"
+          formControlName="description"
+          class="w-full px-4 py-3 glass rounded-2xl text-white placeholder-white/50 border-0 focus:outline-none focus:ring-2 focus:ring-primary-400/50 transition-all duration-300"
+          placeholder="What did you spend on?"
+        >
+        <div *ngIf="expenseForm.get('description')?.invalid && expenseForm.get('description')?.touched"
+             class="text-danger-300 text-sm mt-2 flex items-center">
+          <i class="pi pi-exclamation-triangle mr-1"></i>
+          Description is required
+        </div>
       </div>
-    </div>
 
-    <div class="mb-4">
-      <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-        Amount
-      </label>
-      <input
-        type="number"
-        id="amount"
-        formControlName="amount"
-        step="0.01"
-        min="0.01"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-        placeholder="Enter amount"
-      >
-      <div *ngIf="expenseForm.get('amount')?.invalid && expenseForm.get('amount')?.touched"
-           class="text-red-500 text-sm mt-1">
-        Valid amount is required (minimum 0.01)
+      <!-- Category Field -->
+      <div class="mb-6">
+        <label for="category" class="block text-sm font-medium text-white/80 mb-2">
+          <i class="pi pi-tags mr-2 text-accent-400"></i>
+          Category
+        </label>
+        <select
+          id="category"
+          formControlName="category"
+          class="w-full px-4 py-3 glass rounded-2xl text-white border-0 focus:outline-none focus:ring-2 focus:ring-accent-400/50 transition-all duration-300"
+        >
+          <option value="" class="bg-gray-800 text-white">Select a category</option>
+          <option *ngFor="let category of categories" [value]="category" class="bg-gray-800 text-white">{{ category }}</option>
+        </select>
+        <div *ngIf="expenseForm.get('category')?.invalid && expenseForm.get('category')?.touched"
+             class="text-danger-300 text-sm mt-2 flex items-center">
+          <i class="pi pi-exclamation-triangle mr-1"></i>
+          Category is required
+        </div>
       </div>
-    </div>
 
-    <div class="mb-6">
-      <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-        Date
-      </label>
-      <input
-        type="date"
-        id="date"
-        formControlName="date"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-      >
-      <div *ngIf="expenseForm.get('date')?.invalid && expenseForm.get('date')?.touched"
-           class="text-red-500 text-sm mt-1">
-        Date is required
+      <!-- Amount Field -->
+      <div class="mb-6">
+        <label for="amount" class="block text-sm font-medium text-white/80 mb-2">
+          <i class="pi pi-dollar mr-2 text-success-400"></i>
+          Amount
+        </label>
+        <input
+          type="number"
+          id="amount"
+          formControlName="amount"
+          step="0.01"
+          min="0.01"
+          class="w-full px-4 py-3 glass rounded-2xl text-white placeholder-white/50 border-0 focus:outline-none focus:ring-2 focus:ring-success-400/50 transition-all duration-300"
+          placeholder="0.00"
+        >
+        <div *ngIf="expenseForm.get('amount')?.invalid && expenseForm.get('amount')?.touched"
+             class="text-danger-300 text-sm mt-2 flex items-center">
+          <i class="pi pi-exclamation-triangle mr-1"></i>
+          Valid amount is required (minimum 0.01)
+        </div>
       </div>
-    </div>
 
-    <div class="flex justify-end space-x-3">
-      <button
-        type="button"
-        (click)="onCancel()"
-        class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        [disabled]="expenseForm.invalid"
-        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
-      >
-        {{ isEdit ? 'Update Expense' : 'Add Expense' }}
-      </button>
-    </div>
-  </form>
+      <!-- Date Field -->
+      <div class="mb-8">
+        <label for="date" class="block text-sm font-medium text-white/80 mb-2">
+          <i class="pi pi-calendar mr-2 text-warning-400"></i>
+          Date
+        </label>
+        <input
+          type="date"
+          id="date"
+          formControlName="date"
+          class="w-full px-4 py-3 glass rounded-2xl text-white border-0 focus:outline-none focus:ring-2 focus:ring-warning-400/50 transition-all duration-300"
+        >
+        <div *ngIf="expenseForm.get('date')?.invalid && expenseForm.get('date')?.touched"
+             class="text-danger-300 text-sm mt-2 flex items-center">
+          <i class="pi pi-exclamation-triangle mr-1"></i>
+          Date is required
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          [disabled]="expenseForm.invalid"
+          class="btn-animated px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center"
+        >
+          <i class="pi {{ isEdit ? 'pi-check' : 'pi-plus' }} mr-2"></i>
+          {{ isEdit ? 'Update Expense' : 'Add Expense' }}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

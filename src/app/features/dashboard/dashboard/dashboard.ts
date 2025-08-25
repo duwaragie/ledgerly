@@ -73,7 +73,7 @@ export class Dashboard implements OnInit {
     const dataStr = JSON.stringify(dataToExport, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
 
-    const exportFileDefaultName = `ledgerly-export-${new Date().toISOString().split('T')[0]}.json`;
+    const exportFileDefaultName = `trackonomics-export-${new Date().toISOString().split('T')[0]}.json`;
 
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);

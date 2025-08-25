@@ -1,0 +1,78 @@
+/* Custom styles for expense list */
+
+/* Responsive card layout */
+@media (max-width: 768px) {
+  .expense-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .expense-actions {
+    align-self: flex-end;
+    margin-top: auto;
+  }
+}
+
+/* Expense amount highlighting */
+.expense-amount {
+  position: relative;
+}
+
+.expense-amount::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  border-radius: 1px;
+}
+
+/* Search input focus effect */
+.search-container:focus-within {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Action button hover effects */
+.action-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: width 0.4s, height 0.4s;
+  transform: translate(-50%, -50%);
+}
+
+.action-btn:hover::before {
+  width: 40px;
+  height: 40px;
+}
+
+/* Empty state animation */
+.empty-state {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

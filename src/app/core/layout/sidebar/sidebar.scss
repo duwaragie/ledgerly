@@ -1,0 +1,53 @@
+/* Sidebar specific styles */
+:host {
+  display: block;
+  height: auto;
+}
+
+/* Sidebar container - height will be set dynamically by JavaScript */
+aside {
+  height: auto;
+  min-height: 100vh; /* fallback */
+  position: relative;
+  transition: height 0.3s ease;
+}
+
+/* Navigation content */
+nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: min-height 0.3s ease;
+}
+
+/* Ensure proper spacing for flex items */
+.flex-1 {
+  flex: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+/* Custom scrollbar for sidebar if needed */
+nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+nav::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

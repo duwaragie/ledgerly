@@ -1,56 +1,290 @@
-<div class="container mx-auto px-4">
-  <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Reports</h1>
+<div class="animate-fade-in">
+  <!-- Header Section -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-4xl font-bold text-white mb-2">
+          Financial Reports
+        </h1>
+        <p class="text-white/70 text-lg">Get insights into your spending patterns and financial habits</p>
+      </div>
+      <div class="flex space-x-3">
+        <button (click)="exportPDF()"
+                class="btn-animated px-6 py-3 glass text-white rounded-2xl font-medium hover:bg-white/20 transition-all duration-300">
+          <i class="pi pi-download mr-2"></i>
+          Export PDF
+        </button>
+        <button (click)="refreshData()"
+                [disabled]="isLoading"
+                class="btn-animated px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50">
+          <i class="pi {{ isLoading ? 'pi-spin pi-spinner' : 'pi-refresh' }} mr-2"></i>
+          {{ isLoading ? 'Loading...' : 'Refresh Data' }}
+        </button>
+      </div>
+    </div>
+  </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-    <!-- Summary Card -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Expense Summary</h2>
-      <div class="space-y-2">
-        <div class="flex justify-between">
-          <span class="text-gray-600 dark:text-gray-400">Total Expenses</span>
-          <span class="font-medium text-gray-900 dark:text-white">{{ expenses.length }}</span>
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Total Expenses Card -->
+    <div class="card-hover glass rounded-3xl p-6 relative overflow-hidden stats-card">
+      <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-danger-400/20 to-danger-600/20 rounded-full -mr-10 -mt-10"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-danger-400 to-danger-600 rounded-2xl flex items-center justify-center shadow-lg float-animation">
+            <i class="pi pi-credit-card text-white text-xl"></i>
+          </div>
         </div>
-        <div class="flex justify-between">
-          <span class="text-gray-600 dark:text-gray-400">Total Amount</span>
-          <span class="font-medium text-red-500">{{ totalAmount | currency }}</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-gray-600 dark:text-gray-400">Average per Expense</span>
-          <span class="font-medium text-gray-900 dark:text-white">
-            {{ (expenses.length > 0 ? (totalAmount / expenses.length) : 0) | currency }}
-          </span>
-        </div>
+        <div class="text-white/70 text-sm mb-1">Total Expenses</div>
+        <div *ngIf="!isLoading" class="text-3xl font-bold text-white">{{ expenses.length }}</div>
+        <div *ngIf="isLoading" class="h-8 bg-white/20 rounded animate-pulse w-16"></div>
       </div>
     </div>
 
-    <!-- Category Breakdown Card -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-      <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Category Breakdown</h2>
-      <div class="space-y-3">
-        <div *ngFor="let item of categoryTotals" class="space-y-1">
-          <div class="flex justify-between text-sm">
-            <span class="text-gray-600 dark:text-gray-400">{{ item.category }}</span>
-            <span class="font-medium text-gray-900 dark:text-white">
-              {{ item.total | currency }} ({{ item.percentage | number:'1.0-1' }}%)
-            </span>
+    <!-- Total Amount Card -->
+    <div class="card-hover glass rounded-3xl p-6 relative overflow-hidden stats-card">
+      <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-accent-400/20 to-accent-600/20 rounded-full -mr-10 -mt-10"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-2xl flex items-center justify-center shadow-lg float-animation" style="animation-delay: 0.2s;">
+            <i class="pi pi-dollar text-white text-xl"></i>
           </div>
-          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div
-              class="bg-indigo-600 h-2 rounded-full"
-              [style.width]="getBarWidth(item.percentage)"
-            ></div>
+        </div>
+        <div class="text-white/70 text-sm mb-1">Total Amount</div>
+        <div *ngIf="!isLoading" class="text-3xl font-bold text-white">{{ totalAmount | currency:'USD':'symbol':'1.0-0' }}</div>
+        <div *ngIf="isLoading" class="h-8 bg-white/20 rounded animate-pulse w-24"></div>
+      </div>
+    </div>
+
+    <!-- Average per Expense Card -->
+    <div class="card-hover glass rounded-3xl p-6 relative overflow-hidden stats-card">
+      <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-full -mr-10 -mt-10"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg float-animation" style="animation-delay: 0.4s;">
+            <i class="pi pi-chart-line text-white text-xl"></i>
+          </div>
+        </div>
+        <div class="text-white/70 text-sm mb-1">Average per Expense</div>
+        <div *ngIf="!isLoading" class="text-3xl font-bold text-white">
+          {{ (expenses.length > 0 ? (totalAmount / expenses.length) : 0) | currency:'USD':'symbol':'1.0-0' }}
+        </div>
+        <div *ngIf="isLoading" class="h-8 bg-white/20 rounded animate-pulse w-20"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Category Breakdown -->
+    <div class="glass rounded-3xl p-6 card-hover">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-white flex items-center">
+          <i class="pi pi-chart-pie mr-3 text-accent-400"></i>
+          Category Breakdown
+        </h2>
+      </div>
+
+      <div class="space-y-4" *ngIf="categoryTotals.length > 0 && !isLoading">
+        <div *ngFor="let item of categoryTotals; let i = index"
+             class="p-4 glass rounded-2xl hover:bg-white/10 transition-all duration-300 animate-slide-in-up category-item"
+             [style.animation-delay]="(i * 0.1) + 's'">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-3">
+              <div [class]="'w-10 h-10 rounded-2xl bg-gradient-to-r ' + getCategoryColor(i) + ' flex items-center justify-center'">
+                <i [class]="'pi ' + getCategoryIcon(item.category) + ' text-white text-sm'"></i>
+              </div>
+              <span class="text-white font-medium">{{ item.category }}</span>
+            </div>
+            <div class="text-right">
+              <div class="text-white font-bold">{{ item.total | currency:'USD':'symbol':'1.0-0' }}</div>
+              <div class="text-white/60 text-sm">{{ item.percentage | number:'1.0-1' }}%</div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden progress-bar">
+            <div [class]="'h-2 rounded-full bg-gradient-to-r transition-all duration-1000 ease-out category-progress ' + getCategoryColor(i)"
+                 [style.width]="getBarWidth(item.percentage)"
+                 [style.animation-delay]="(i * 0.2 + 0.5) + 's'"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading state -->
+      <div *ngIf="isLoading" class="space-y-4">
+        <div *ngFor="let skeleton of [1,2,3,4,5]" class="p-4 glass rounded-2xl animate-pulse">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 rounded-full bg-white/20"></div>
+              <div class="h-4 bg-white/20 rounded w-24"></div>
+            </div>
+            <div class="text-right">
+              <div class="h-4 bg-white/20 rounded w-16 mb-1"></div>
+              <div class="h-3 bg-white/20 rounded w-12"></div>
+            </div>
+          </div>
+          <div class="w-full bg-white/10 rounded-full h-2">
+            <div class="h-2 bg-white/20 rounded-full w-1/2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div *ngIf="categoryTotals.length === 0 && !isLoading" class="text-center py-12">
+        <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 float-animation">
+          <i class="pi pi-chart-pie text-white/60 text-2xl"></i>
+        </div>
+        <p class="text-white/60">No expense data available for category breakdown.</p>
+      </div>
+    </div>
+
+    <!-- Right Column - Charts -->
+    <div class="space-y-8">
+      <!-- Category Comparison Bar Chart -->
+      <div class="glass rounded-3xl p-6 card-hover">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-white flex items-center">
+            <i class="pi pi-chart-bar mr-3 text-success-400"></i>
+            Category Comparison
+          </h2>
+        </div>
+
+        <div *ngIf="barChartData && categoryTotals.length > 0 && !isLoading" class="h-64">
+          <p-chart type="bar"
+                   [data]="barChartData"
+                   [options]="chartOptions"
+                   class="h-full">
+          </p-chart>
+        </div>
+
+        <!-- Loading state -->
+        <div *ngIf="isLoading" class="h-64 flex items-center justify-center">
+          <div class="animate-pulse flex space-x-2 items-end justify-center h-48">
+            <div class="w-6 h-24 bg-white/10 rounded"></div>
+            <div class="w-6 h-32 bg-white/10 rounded"></div>
+            <div class="w-6 h-18 bg-white/10 rounded"></div>
+            <div class="w-6 h-36 bg-white/10 rounded"></div>
+            <div class="w-6 h-28 bg-white/10 rounded"></div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="categoryTotals.length === 0 && !isLoading" class="h-64 flex items-center justify-center">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="pi pi-chart-bar text-white/60 text-xl"></i>
+            </div>
+            <p class="text-white/60">No data available for chart.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Trends Line Chart -->
+      <div class="glass rounded-3xl p-6 card-hover">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-white flex items-center">
+            <i class="pi pi-chart-line mr-3 text-warning-400"></i>
+            Monthly Trends
+          </h2>
+        </div>
+
+        <div *ngIf="lineChartData && expenses.length > 0 && !isLoading" class="h-64">
+          <p-chart type="line"
+                   [data]="lineChartData"
+                   [options]="chartOptions"
+                   class="h-full">
+          </p-chart>
+        </div>
+
+        <!-- Loading state -->
+        <div *ngIf="isLoading" class="h-64 flex items-center justify-center">
+          <div class="animate-pulse w-full h-48">
+            <div class="w-full h-full bg-white/10 rounded flex items-end justify-between p-4">
+              <div class="w-2 h-12 bg-white/20 rounded"></div>
+              <div class="w-2 h-18 bg-white/20 rounded"></div>
+              <div class="w-2 h-15 bg-white/20 rounded"></div>
+              <div class="w-2 h-24 bg-white/20 rounded"></div>
+              <div class="w-2 h-21 bg-white/20 rounded"></div>
+              <div class="w-2 h-27 bg-white/20 rounded"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="expenses.length === 0 && !isLoading" class="h-64 flex items-center justify-center">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="pi pi-chart-line text-white/60 text-xl"></i>
+            </div>
+            <p class="text-white/60">No data available for trend analysis.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Expenses by Month -->
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-    <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Monthly Expenses</h2>
-    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
-      <p>Monthly expense charts will be implemented in a future update.</p>
-      <p class="text-sm">This feature will include interactive charts showing expenses by month.</p>
+  <!-- Category Distribution Pie Chart - Full Width -->
+  <div class="mt-8">
+    <div class="glass rounded-3xl p-6 card-hover">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-white flex items-center">
+          <i class="pi pi-chart-pie mr-3 text-primary-400"></i>
+          Category Distribution
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <!-- Pie Chart -->
+        <div *ngIf="pieChartData && categoryTotals.length > 0 && !isLoading" class="h-80">
+          <p-chart type="pie"
+                   [data]="pieChartData"
+                   [options]="chartOptions"
+                   class="h-full">
+          </p-chart>
+        </div>
+
+        <!-- Chart Statistics -->
+        <div *ngIf="categoryTotals.length > 0 && !isLoading" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="text-center p-4 glass rounded-2xl">
+              <div class="text-2xl font-bold text-white">{{ categoryTotals.length }}</div>
+              <div class="text-white/60 text-sm">Categories</div>
+            </div>
+            <div class="text-center p-4 glass rounded-2xl">
+              <div class="text-2xl font-bold text-white">{{ totalAmount | currency:'USD':'symbol':'1.0-0' }}</div>
+              <div class="text-white/60 text-sm">Total Spent</div>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <div *ngFor="let item of categoryTotals.slice(0, 5); let i = index" class="flex items-center justify-between text-sm">
+              <div class="flex items-center space-x-2">
+                <div [style.background-color]="['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b'][i]"
+                     class="w-3 h-3 rounded-full"></div>
+                <span class="text-white/80">{{ item.category }}</span>
+              </div>
+              <span class="text-white font-medium">{{ item.percentage | number:'1.0-1' }}%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading state -->
+        <div *ngIf="isLoading" class="h-80 flex items-center justify-center lg:col-span-2">
+          <div class="animate-pulse">
+            <div class="w-60 h-60 bg-white/10 rounded-full mx-auto"></div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="categoryTotals.length === 0 && !isLoading" class="h-80 flex items-center justify-center lg:col-span-2">
+          <div class="text-center">
+            <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="pi pi-chart-pie text-white/60 text-2xl"></i>
+            </div>
+            <p class="text-white/60">No data available for chart.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

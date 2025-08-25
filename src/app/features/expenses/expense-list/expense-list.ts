@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ExpenseService } from '../../../core/services/expense';
+import { ToastService } from '../../../core/services/toast';
 import { Expense } from '../../../core/models/expense';
 
 @Component({
@@ -19,6 +20,7 @@ export class ExpenseList implements OnInit {
 
   constructor(
     private expenseService: ExpenseService,
+    private toastService: ToastService,
     private router: Router
   ) {}
 
@@ -47,6 +49,11 @@ export class ExpenseList implements OnInit {
     );
   }
 
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.filteredExpenses = this.expenses;
+  }
+
   addExpense(): void {
     this.router.navigate(['/expenses/new']);
   }
@@ -56,9 +63,17 @@ export class ExpenseList implements OnInit {
 
   deleteExpense(id: number): void {
     if (confirm('Are you sure you want to delete this expense?')) {
-      this.expenseService.deleteExpense(id).subscribe(success => {
-        if (success) {
-          this.loadExpenses();
+      this.expenseService.deleteExpense(id).subscribe({
+        next: (success) => {
+          if (success) {
+            this.toastService.success('Expense deleted successfully! 🗑️', 3000);
+            this.loadExpenses();
+          } else {
+            this.toastService.error('Failed to delete expense. Please try again.', 5000);
+          }
+        },
+        error: () => {
+          this.toastService.error('An error occurred while deleting the expense.', 5000);
         }
       });
     }

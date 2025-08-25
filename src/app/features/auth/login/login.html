@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center relative overflow-hidden">
+<div class="h-screen flex items-center justify-center relative overflow-hidden">
   <!-- Background Elements -->
   <div class="absolute inset-0">
     <div class="absolute top-20 left-20 w-72 h-72 bg-primary-400/20 rounded-full blur-3xl animate-float"></div>
@@ -9,22 +9,22 @@
   <!-- Login Container -->
   <div class="relative z-10 w-full max-w-md mx-auto px-6">
     <!-- Logo and Welcome -->
-    <div class="text-center mb-8 animate-fade-in">
-      <div class="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-        <i class="pi pi-chart-line text-white text-3xl"></i>
+    <div class="text-center mb-6 animate-fade-in">
+      <div class="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+        <i class="pi pi-chart-line text-white text-2xl"></i>
       </div>
-      <h1 class="text-4xl font-bold text-white mb-2">Welcome to Ledgerly</h1>
-      <p class="text-white/70 text-lg">Sign in to manage your expenses</p>
+      <h1 class="text-3xl font-bold text-white mb-1">Welcome to Trackonomics</h1>
+      <p class="text-white/70 text-base">Sign in to manage your expenses</p>
     </div>
 
     <!-- Login Form -->
-    <div class="glass rounded-3xl p-8 shadow-2xl card-hover animate-slide-in-up">
-      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="space-y-6">
+    <div class="glass rounded-3xl p-6 shadow-2xl card-hover animate-slide-in-up">
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="space-y-4">
         <!-- Email Field -->
-        <div class="space-y-2">
+        <div class="space-y-1">
           <label for="email-address" class="text-white/80 text-sm font-medium">Email Address</label>
           <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="pi pi-envelope text-white/40"></i>
             </div>
             <input
@@ -32,16 +32,16 @@
               formControlName="email"
               type="email"
               autocomplete="email"
-              class="w-full pl-12 pr-4 py-4 glass rounded-2xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-2 focus:ring-primary-400/50 transition-all duration-300 bg-white/10"
+              class="w-full pl-10 pr-4 py-3 glass rounded-2xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-2 focus:ring-primary-400/50 transition-all duration-300 bg-white/10"
               placeholder="Enter your email">
           </div>
         </div>
 
         <!-- Password Field -->
-        <div class="space-y-2">
+        <div class="space-y-1">
           <label for="password" class="text-white/80 text-sm font-medium">Password</label>
           <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="pi pi-lock text-white/40"></i>
             </div>
             <input
@@ -49,27 +49,27 @@
               formControlName="password"
               type="password"
               autocomplete="current-password"
-              class="w-full pl-12 pr-4 py-4 glass rounded-2xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-2 focus:ring-primary-400/50 transition-all duration-300 bg-white/10"
+              class="w-full pl-10 pr-4 py-3 glass rounded-2xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-2 focus:ring-primary-400/50 transition-all duration-300 bg-white/10"
               placeholder="Enter your password">
           </div>
         </div>
 
         <!-- Remember Me & Forgot Password -->
-        <div class="flex items-center justify-between">
-          <label class="flex items-center space-x-3">
+        <div class="flex items-center justify-between text-sm">
+          <label class="flex items-center space-x-2">
             <input type="checkbox" class="w-4 h-4 text-primary-500 bg-white/10 border-white/20 rounded focus:ring-primary-400 focus:ring-2">
-            <span class="text-white/70 text-sm">Remember me</span>
+            <span class="text-white/70">Remember me</span>
           </label>
-          <a href="#" class="text-primary-300 hover:text-primary-200 text-sm transition-colors duration-300">
+          <a href="#" class="text-primary-300 hover:text-primary-200 transition-colors duration-300">
             Forgot password?
           </a>
         </div>
 
         <!-- Error Message -->
-        <div *ngIf="error" class="p-4 bg-danger-500/20 border border-danger-400/30 rounded-2xl animate-fade-in">
-          <div class="flex items-center space-x-3">
-            <i class="pi pi-exclamation-triangle text-danger-300"></i>
-            <span class="text-danger-200">{{ error }}</span>
+        <div *ngIf="error" class="p-3 bg-danger-500/20 border border-danger-400/30 rounded-2xl animate-fade-in">
+          <div class="flex items-center space-x-2">
+            <i class="pi pi-exclamation-triangle text-danger-300 text-sm"></i>
+            <span class="text-danger-200 text-sm">{{ error }}</span>
           </div>
         </div>
 
@@ -77,8 +77,8 @@
         <button
           type="submit"
           [disabled]="loading"
-          class="w-full btn-animated py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-          <span class="flex items-center justify-center space-x-3">
+          class="w-full btn-animated py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+          <span class="flex items-center justify-center space-x-2">
             <i class="pi pi-sign-in" [class.pi-spin]="loading"></i>
             <span>{{ loading ? 'Signing in...' : 'Sign In' }}</span>
           </span>
@@ -90,49 +90,32 @@
             <div class="w-full border-t border-white/20"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-4 glass text-white/60">Or continue with</span>
+            <span class="px-3 glass text-white/60">Or continue with</span>
           </div>
         </div>
 
         <!-- Social Login Buttons -->
-        <div class="grid grid-cols-2 gap-4">
-          <button type="button" class="btn-animated p-4 glass rounded-2xl text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2">
-            <i class="pi pi-google text-xl"></i>
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" class="btn-animated p-3 glass rounded-2xl text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2 text-sm">
+            <i class="pi pi-google"></i>
             <span>Google</span>
           </button>
-          <button type="button" class="btn-animated p-4 glass rounded-2xl text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2">
-            <i class="pi pi-github text-xl"></i>
+          <button type="button" class="btn-animated p-3 glass rounded-2xl text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2 text-sm">
+            <i class="pi pi-github"></i>
             <span>GitHub</span>
           </button>
         </div>
 
-        <!-- Demo Credentials -->
-        <div class="p-4 glass rounded-2xl border border-warning-400/30">
-          <div class="flex items-center space-x-3 mb-2">
-            <i class="pi pi-info-circle text-warning-300"></i>
-            <span class="text-warning-200 font-medium">Demo Account</span>
-          </div>
-          <p class="text-white/70 text-sm">
-            Email: <span class="text-white font-mono">demo@example.com</span><br>
-            Password: <span class="text-white font-mono">password</span>
-          </p>
-        </div>
-
         <!-- Sign Up Link -->
         <div class="text-center">
-          <p class="text-white/60">
+          <p class="text-white/60 text-sm">
             Don't have an account?
-            <a href="#" class="text-primary-300 hover:text-primary-200 font-medium transition-colors duration-300">
+            <a routerLink="/signup" class="text-primary-300 hover:text-primary-200 font-medium transition-colors duration-300">
               Sign up now
             </a>
           </p>
         </div>
       </form>
-    </div>
-
-    <!-- Footer -->
-    <div class="text-center mt-8 text-white/50 text-sm animate-fade-in" style="animation-delay: 0.5s;">
-      <p>&copy; 2025 Ledgerly. All rights reserved.</p>
     </div>
   </div>
 </div>

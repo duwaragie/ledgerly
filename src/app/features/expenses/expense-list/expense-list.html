@@ -1,93 +1,113 @@
-<div class="container mx-auto px-4">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Expenses</h1>
-    <button
-      (click)="addExpense()"
-      class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md"
-    >
-      Add Expense
-    </button>
+<div class="animate-fade-in">
+  <!-- Header Section -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-4xl font-bold text-white mb-2">
+          Your Expenses
+        </h1>
+        <p class="text-white/70 text-lg">Track and manage all your spending in one place</p>
+      </div>
+      <div class="flex space-x-3">
+        <button (click)="addExpense()"
+                class="btn-animated px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+          <i class="pi pi-plus mr-2"></i>
+          Add Expense
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="mb-6">
-    <input
-      type="text"
-      [(ngModel)]="searchTerm"
-      (input)="filterExpenses()"
-      placeholder="Search expenses..."
-      class="w-full px-4 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-    >
+  <!-- Search Section -->
+  <div class="mb-8">
+    <div class="glass rounded-3xl p-6 card-hover search-container transition-all duration-300">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-2xl flex items-center justify-center">
+          <i class="pi pi-search text-primary-300 text-xl"></i>
+        </div>
+        <div class="flex-1">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="filterExpenses()"
+            placeholder="Search expenses by description, category, or amount..."
+            class="w-full bg-transparent text-white placeholder-white/50 text-lg focus:outline-none"
+          >
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-        <thead class="bg-gray-50 dark:bg-gray-700">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-              Description
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-              Category
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-              Date
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-              Amount
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-          <tr *ngFor="let expense of filteredExpenses">
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-              {{ expense.description }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-              {{ expense.category }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-              {{ expense.date | date }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">
-              {{ expense.amount | currency }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <button
-                (click)="editExpense(expense.id)"
-                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3"
-              >
-                Edit
-              </button>
-              <button
-                (click)="deleteExpense(expense.id)"
-                class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-          <tr *ngIf="filteredExpenses.length === 0">
-            <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-              No expenses found.
-            </td>
-          </tr>
-        </tbody>
-        <tfoot class="bg-gray-50 dark:bg-gray-700">
-          <tr>
-            <td colspan="3" class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
-              Total
-            </td>
-            <td class="px-6 py-4 text-sm font-medium text-red-500">
-              {{ getTotalAmount() | currency }}
-            </td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
+  <!-- Expenses List -->
+  <div class="glass rounded-3xl p-6 card-hover">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-white flex items-center">
+        <i class="pi pi-list mr-3 text-primary-400"></i>
+        All Expenses
+      </h2>
+      <div class="text-white/70">
+        Total: <span class="text-2xl font-bold text-danger-300">{{ getTotalAmount() | currency:'USD':'symbol':'1.0-0' }}</span>
+      </div>
+    </div>
+
+    <!-- Mobile-friendly card layout -->
+    <div class="space-y-4" *ngIf="filteredExpenses.length > 0">
+      <div *ngFor="let expense of filteredExpenses; let i = index"
+           class="flex items-center justify-between p-4 glass rounded-2xl hover:bg-white/20 transition-all duration-300 animate-slide-in-up expense-card"
+           [style.animation-delay]="(i * 0.1) + 's'">
+        <div class="flex items-center space-x-4 flex-1">
+          <div class="w-12 h-12 bg-gradient-to-br from-accent-400/20 to-accent-600/20 rounded-2xl flex items-center justify-center">
+            <i class="pi pi-shopping-cart text-accent-300"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-white font-medium truncate">{{ expense.description }}</h3>
+            <p class="text-white/60 text-sm">{{ expense.category }} • {{ expense.date | date:'shortDate' }}</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4 expense-actions">
+          <div class="text-right expense-amount">
+            <div class="text-xl font-bold text-danger-300">{{ expense.amount | currency:'USD':'symbol':'1.0-0' }}</div>
+            <div class="text-white/60 text-sm">{{ expense.date | date:'shortTime' }}</div>
+          </div>
+          <div class="flex space-x-2">
+            <button
+              (click)="editExpense(expense.id)"
+              class="w-10 h-10 glass rounded-xl flex items-center justify-center text-primary-300 hover:text-white hover:bg-primary-500/20 transition-all duration-300 action-btn"
+              title="Edit expense"
+            >
+              <i class="pi pi-pencil"></i>
+            </button>
+            <button
+              (click)="deleteExpense(expense.id)"
+              class="w-10 h-10 glass rounded-xl flex items-center justify-center text-danger-300 hover:text-white hover:bg-danger-500/20 transition-all duration-300 action-btn"
+              title="Delete expense"
+            >
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="filteredExpenses.length === 0" class="text-center py-16 empty-state">
+      <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 float-animation">
+        <i class="pi pi-wallet text-white/60 text-3xl"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-white mb-4">No expenses found</h3>
+      <p class="text-white/60 mb-8 max-w-md mx-auto">
+        {{ searchTerm ? 'Try adjusting your search terms or clear the search to see all expenses.' : 'Start tracking your finances by adding your first expense!' }}
+      </p>
+      <button *ngIf="!searchTerm" (click)="addExpense()"
+              class="btn-animated px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+        <i class="pi pi-plus mr-2"></i>
+        Add Your First Expense
+      </button>
+      <button *ngIf="searchTerm" (click)="clearSearch()"
+              class="btn-animated px-8 py-4 glass text-white rounded-2xl font-medium hover:bg-white/20 transition-all duration-300">
+        <i class="pi pi-times mr-2"></i>
+        Clear Search
+      </button>
     </div>
   </div>
 </div>

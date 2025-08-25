@@ -1,0 +1,164 @@
+<div class="h-screen flex items-center justify-center relative overflow-hidden">
+  <!-- Background Elements -->
+  <div class="absolute inset-0">
+    <div class="absolute top-20 left-20 w-72 h-72 bg-primary-400/20 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute bottom-20 right-20 w-96 h-96 bg-accent-400/20 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+  </div>
+
+  <!-- Signup Container -->
+  <div class="relative z-10 w-full max-w-lg mx-auto px-6">
+    <!-- Logo and Welcome -->
+    <div class="text-center mb-4 animate-fade-in">
+      <div class="w-14 h-14 bg-gradient-to-br from-primary-400 to-primary-600 rounded-3xl flex items-center justify-center mx-auto mb-3 shadow-2xl">
+        <i class="pi pi-chart-line text-white text-xl"></i>
+      </div>
+      <h1 class="text-2xl font-bold text-white mb-1">Join Trackonomics</h1>
+      <p class="text-white/70 text-sm">Create your account to start tracking expenses</p>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="glass rounded-3xl p-5 shadow-2xl card-hover animate-slide-in-up">
+      <form (ngSubmit)="onSubmit()" [formGroup]="signupForm" class="space-y-3">
+        <!-- Name and Email Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Name Field -->
+          <div class="space-y-1">
+            <label for="name" class="text-white/80 text-sm font-medium">Full Name</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="pi pi-user text-white/40 text-sm"></i>
+              </div>
+              <input
+                id="name"
+                formControlName="name"
+                type="text"
+                autocomplete="name"
+                class="w-full pl-9 pr-3 py-2.5 glass rounded-xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-1 focus:ring-primary-400/50 transition-all duration-300 bg-white/10 text-sm"
+                placeholder="Enter your full name">
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="space-y-1">
+            <label for="email-address" class="text-white/80 text-sm font-medium">Email Address</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="pi pi-envelope text-white/40 text-sm"></i>
+              </div>
+              <input
+                id="email-address"
+                formControlName="email"
+                type="email"
+                autocomplete="email"
+                class="w-full pl-9 pr-3 py-2.5 glass rounded-xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-1 focus:ring-primary-400/50 transition-all duration-300 bg-white/10 text-sm"
+                placeholder="Enter your email">
+            </div>
+          </div>
+        </div>
+
+        <!-- Password Fields Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Password Field -->
+          <div class="space-y-1">
+            <label for="password" class="text-white/80 text-sm font-medium">Password</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="pi pi-lock text-white/40 text-sm"></i>
+              </div>
+              <input
+                id="password"
+                formControlName="password"
+                type="password"
+                autocomplete="new-password"
+                class="w-full pl-9 pr-3 py-2.5 glass rounded-xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-1 focus:ring-primary-400/50 transition-all duration-300 bg-white/10 text-sm"
+                placeholder="Create a password">
+            </div>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="space-y-1">
+            <label for="confirmPassword" class="text-white/80 text-sm font-medium">Confirm Password</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="pi pi-lock text-white/40 text-sm"></i>
+              </div>
+              <input
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                type="password"
+                autocomplete="new-password"
+                class="w-full pl-9 pr-3 py-2.5 glass rounded-xl text-white placeholder-white/40 border border-white/20 focus:border-primary-400 focus:ring-1 focus:ring-primary-400/50 transition-all duration-300 bg-white/10 text-sm"
+                placeholder="Confirm your password">
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="flex items-start space-x-2 text-xs">
+          <input
+            type="checkbox"
+            formControlName="acceptTerms"
+            class="w-3.5 h-3.5 mt-0.5 text-primary-500 bg-white/10 border-white/20 rounded focus:ring-primary-400 focus:ring-1">
+          <span class="text-white/70">
+            I agree to the
+            <a href="#" class="text-primary-300 hover:text-primary-200 transition-colors duration-300">Terms of Service</a>
+            and
+            <a href="#" class="text-primary-300 hover:text-primary-200 transition-colors duration-300">Privacy Policy</a>
+          </span>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="error" class="p-2.5 bg-danger-500/20 border border-danger-400/30 rounded-xl animate-fade-in">
+          <div class="flex items-center space-x-2">
+            <i class="pi pi-exclamation-triangle text-danger-300 text-sm"></i>
+            <span class="text-danger-200 text-xs">{{ error }}</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="loading || signupForm.invalid"
+          class="w-full btn-animated py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+          <span class="flex items-center justify-center space-x-2">
+            <i class="pi pi-user-plus text-sm" [class.pi-spin]="loading"></i>
+            <span>{{ loading ? 'Creating Account...' : 'Create Account' }}</span>
+          </span>
+        </button>
+
+        <!-- Divider -->
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-white/20"></div>
+          </div>
+          <div class="relative flex justify-center text-xs">
+            <span class="px-2 glass text-white/60">Or sign up with</span>
+          </div>
+        </div>
+
+        <!-- Social Signup Buttons -->
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" class="btn-animated p-2.5 glass rounded-xl text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-1.5 text-xs">
+            <i class="pi pi-google text-sm"></i>
+            <span>Google</span>
+          </button>
+          <button type="button" class="btn-animated p-2.5 glass rounded-xl text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-1.5 text-xs">
+            <i class="pi pi-github text-sm"></i>
+            <span>GitHub</span>
+          </button>
+        </div>
+
+        <!-- Login Link -->
+        <div class="text-center">
+          <p class="text-white/60 text-xs">
+            Already have an account?
+            <a routerLink="/login" class="text-primary-300 hover:text-primary-200 font-medium transition-colors duration-300">
+              Sign in here
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

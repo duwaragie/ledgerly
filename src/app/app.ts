@@ -4,17 +4,18 @@ import { Component } from '@angular/core';
  import { HeaderComponent } from './core/layout/header/header';
  import { SidebarComponent } from './core/layout/sidebar/sidebar';
  import { FooterComponent } from './core/layout/footer/footer';
+ import { ToastComponent } from './core/layout/toast/toast';
  import { AuthService } from './core/services/auth';
 
  @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent, ToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class AppComponent {
-   title = 'Ledgerly';
+   title = 'Trackonomics';
 
    constructor(public authService: AuthService) {}
 

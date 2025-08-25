@@ -1,0 +1,69 @@
+/* Toast container animations */
+.toast-container {
+  animation: slideInRight 0.4s ease-out;
+}
+
+.toast-container.removing {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Progress bar animation */
+.toast-progress {
+  animation: progress linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .toast-container {
+    min-width: 280px;
+    max-width: calc(100vw - 2rem);
+  }
+}
+
+/* Enhanced glass effect for toasts */
+.toast-container {
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Close button hover effect */
+.toast-container button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  padding: 2px;
+}

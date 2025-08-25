@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ledgerly": {
+    "trackonomics": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ledgerly:build:production"
+              "buildTarget": "trackonomics:build:production"
             },
             "development": {
-              "buildTarget": "ledgerly:build:development"
+              "buildTarget": "trackonomics:build:development"
             }
           },
           "defaultConfiguration": "development"
